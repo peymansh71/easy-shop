@@ -1,0 +1,69 @@
+.main {
+  width: 100%;
+  margin: 0.88rem;
+  padding: 0.88rem;
+  width: 1700px;
+  border-radius: 5px;
+  border: 1px solid #e1e3e2;
+
+  .button {
+    background-color: $primary-color;
+    color: $third-white;
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: white;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+    }
+
+    &:focus {
+      background-color: $primary-color;
+      color: $third-white;
+      border: 1px solid $primary-color;
+    }
+  }
+
+  > button {
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  &__pubilc {
+    @include makeCenter(center, flex-end, row);
+
+    > button {
+      margin: 0 5px;
+    }
+  }
+
+  .table {
+    &__actions {
+      margin: 0 5px;
+      border-radius: 10px;
+      width: fit-content;
+      padding: 5px;
+      background-color: #d3d1d2;
+      font-size: 12px;
+
+      &--active {
+        background-color: $primary-color;
+        color: $white;
+      }
+
+      &--inactive {
+        background-color: $white;
+      }
+    }
+  }
+
+  &__rows {
+    display: flex;
+    justify-content: flex-end;
+    > button {
+      margin: 20px 10px;
+      width: 150px;
+    }
+  }
+}

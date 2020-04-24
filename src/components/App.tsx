@@ -1,15 +1,15 @@
-import React from 'react';
-import './App.css';
-import Dashboard from './dashboard';
-import Result from './Result';
+import React from "react";
+import "./App.scss";
+import Main from "./Main";
+import AccessControl from "./AccessControl";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Dashboard />
-      <Result />
+      <Main />
+      <AccessControl />
     </div>
   );
-}
+};
 
 export default App;
