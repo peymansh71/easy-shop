@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table } from "antd";
-import CreateRole from "./CreateRole";
+import Create from "./Create";
 
 import { getRolesData } from "../../redux/actions/RolesActions";
 import { useDispatch } from "react-redux";
 
-export default function Main<IProps>() {
+export default function View<IProps>() {
   const [stateVisible, setStateVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -127,7 +127,7 @@ export default function Main<IProps>() {
         Create New Role
       </Button>
 
-      <CreateRole show={stateVisible} onclose={handleOk} />
+      <Create show={stateVisible} onclose={handleOk} />
 
       <Table
         columns={columns}

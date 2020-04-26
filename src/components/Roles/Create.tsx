@@ -6,7 +6,7 @@ interface IProps {
   onclose: () => void;
 }
 
-export default function CreateRole({ show, onclose }: IProps) {
+export default function Create({ show, onclose }: IProps) {
   // const [roleName, setRoleName] = useState<string | undefined>(undefined);
 
   const onChange = (value: any) => {

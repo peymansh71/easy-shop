@@ -7,31 +7,14 @@ class Service {
   async fetchBase(url, options) {
     let fetchOptions = { ...options };
 
-    console.log(url);
-
     // call api
     try {
-      const response = await Promise.race([
-        fetch(url, { ...fetchOptions }),
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve({
-              errors: {
-                code: 408,
-                message: "خطایی رخ داده است ،‌لطفا مجددا تلاش کنید!",
-              },
-            });
-          }, 40 * 1000);
-        }),
-      ]);
+      const response = await Promise.race([fetch(url, { ...fetchOptions })]);
 
       // get result
       const result = await response.json();
 
-      if (
-        result.hasOwnProperty("errors") || // backend "errors"
-        result.hasOwnProperty("error") // auth "error"
-      ) {
+      if (result.hasOwnProperty("errors")) {
         throw result;
       } else return result;
     } catch (e) {
@@ -39,7 +22,7 @@ class Service {
     }
   }
 
-  // USER
+  // Roles
   Get_rolesData = ({ params = {}, body = {} }) =>
     this.fetchBase(
       APIRouteManager.generateRoute({

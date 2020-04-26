@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import Main from "./Roles/Main";
+import View from "./Roles/View";
 import AccessControl from "./Roles/AccessControl";
 import History from "./Roles/History";
 
@@ -9,7 +9,7 @@ const App: React.FC = () => {
     <div className="App roles">
       <div className="roles__main">
         <span>VIEW ROLES</span>
-        <Main />
+        <View />
       </div>
 
       <div className="roles__access-control">
