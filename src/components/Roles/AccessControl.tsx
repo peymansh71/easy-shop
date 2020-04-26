@@ -1,31 +1,16 @@
 import React, { useState } from "react";
-import { Button, Table, Checkbox, Select } from "antd";
+import { Button, Table, Checkbox, Select, Radio } from "antd";
 
 export default function AccessControl() {
+  const [stateValue, setStateValue] = useState<number | undefined>(0);
   // const data: any[] | undefined = [];
 
   // for (let i = 0; i < 13; i++) {
   //   data.push({
   //     key: i,
-  //     companyAddress: <Checkbox onChange={(e) => changings(e, i)}></Checkbox>,
+  //     companyAddress: <Checkbox  onChange={(e) => changings(e, i)}></Checkbox>,
   //   });
   // }
-
-  const rowSelection = {
-    onChange: (selectedRowKeys: any, selectedRows: any) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    onSelect: (record: any, selected: any, selectedRows: any) => {
-      console.log(record, selected, selectedRows);
-    },
-    onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
-      console.log(selected, selectedRows, changeRows);
-    },
-  };
 
   const { Option } = Select;
 
@@ -38,28 +23,24 @@ export default function AccessControl() {
     );
   }
 
+  const onChangeRadio = (e: any) => {
+    setStateValue(e.target.value);
+  };
+
   const data = [
     {
       key: 1,
-      name: "John Brown sr.",
+      name: (
+        <>
+          <Radio.Group onChange={(e) => onChangeRadio(e)} value={stateValue}>
+            <Radio value={1}>Purchase</Radio>
+          </Radio.Group>
+        </>
+      ),
       children: [
         {
           key: 11,
           name: "John Brown",
-          age: 42,
-          address: "New York No. 2 Lake Park",
-        },
-      ],
-    },
-    {
-      key: 2,
-      name: "John Brown sr.",
-      children: [
-        {
-          key: 11,
-          name: "John Brown",
-          age: 42,
-          address: "New York No. 2 Lake Park",
         },
       ],
     },
@@ -290,7 +271,6 @@ export default function AccessControl() {
         <Button className="button">save</Button>
         <Button className="button">?</Button>
       </div>
-      <img src={ARROWDOWN} alt="" />
 
       <Table
         columns={columns}
