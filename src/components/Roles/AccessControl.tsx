@@ -1,8 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { getAccessControlData } from "../../redux/actions/RolesActions";
+
 import { Button, Table, Checkbox, Select, Radio } from "antd";
 
 export default function AccessControl() {
+  useEffect(() => {
+    callApi();
+  }, []);
+
+  const callApi = () => {
+    const apiConf = {
+      params: {},
+    };
+    dispatch(getAccessControlData(apiConf));
+  };
+
   const [stateValue, setStateValue] = useState<number | undefined>(0);
+
+  const dispatch = useDispatch();
+
   // const data: any[] | undefined = [];
 
   // for (let i = 0; i < 13; i++) {

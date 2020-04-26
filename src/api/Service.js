@@ -31,6 +31,16 @@ class Service {
       }),
       { method: "GET" }
     );
+
+  // Access Control
+  Get_accessControlData = ({ params = {}, body = {} }) =>
+    this.fetchBase(
+      APIRouteManager.generateRoute({
+        key: APIEndpointConstants.GET_roleAccess,
+        params,
+      }),
+      { method: "GET" }
+    );
 }
 
 export default new Service();
