@@ -1,9 +1,25 @@
-import React, { useState } from "react";
-import { Button, Table, Tag } from "antd";
-import Dashboard from "./dashboard";
+import React, { useState, useEffect } from "react";
+import { Button, Table } from "antd";
+import CreateRole from "./CreateRole";
+
+import { getRolesData } from "../../redux/actions/RolesActions";
+import { useDispatch } from "react-redux";
 
 export default function Main<IProps>() {
   const [stateVisible, setStateVisible] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    callApi();
+  });
+
+  const callApi = async () => {
+    const apiConf = {
+      params: {},
+    };
+    dispatch(getRolesData(apiConf));
+  };
 
   const showModal = () => {
     setStateVisible(true);
@@ -111,7 +127,7 @@ export default function Main<IProps>() {
         Create New Role
       </Button>
 
-      <Dashboard show={stateVisible} onclose={handleOk} />
+      <CreateRole show={stateVisible} onclose={handleOk} />
 
       <Table
         columns={columns}

@@ -13,6 +13,19 @@ export default function AccessControl() {
 
   const columns = [
     {
+      title: "Select Role",
+      children: [
+        {
+          dataIndex: "companyAddress",
+          key: "companyAddress",
+          width: 100,
+        },
+      ],
+      dataIndex: "DateCreated",
+      key: "DateCreated",
+      ellipsis: true,
+    },
+    {
       title: "No Access(invisable)",
       children: [
         {
@@ -192,7 +205,7 @@ export default function AccessControl() {
           ),
           dataIndex: "companyAddress",
           key: "companyAddress",
-          width: 300,
+          width: 120,
         },
       ],
       dataIndex: "DateCreated",

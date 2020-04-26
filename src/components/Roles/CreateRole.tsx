@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Button, Input, Form, DatePicker } from "antd";
 
 interface IProps {
@@ -6,7 +6,7 @@ interface IProps {
   onclose: () => void;
 }
 
-export default function Dashboard({ show, onclose }: IProps) {
+export default function CreateRole({ show, onclose }: IProps) {
   // const [roleName, setRoleName] = useState<string | undefined>(undefined);
 
   const onChange = (value: any) => {

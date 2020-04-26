@@ -1,0 +1,18 @@
+.history {
+  padding: 0.88rem;
+  border-radius: 5px;
+  border: 1px solid #e1e3e2;
+
+  &__public {
+    @include makeCenter(flex-end, flex-end, row);
+
+    button {
+      margin: 0 5px;
+    }
+  }
+
+  > button {
+    width: 400px;
+    margin-bottom: 20px;
+  }
+}

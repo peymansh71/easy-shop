@@ -1,8 +1,5 @@
 .access-control {
-  width: 100%;
-  margin: 0.88rem;
   padding: 0.88rem;
-  width: 1700px;
   border-radius: 5px;
   border: 1px solid $border-color;
   &__public {
@@ -11,6 +8,17 @@
 
     button {
       margin: 0 5px;
+    }
+  }
+
+  .table {
+    thead {
+      > tr > th {
+        button {
+          margin: 0 1px;
+          font-size: 0.66rem;
+        }
+      }
     }
   }
 }

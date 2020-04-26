@@ -1,12 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./components/App";
 
-import Root from './root';
+import { Provider } from "react-redux";
+import configreStore from "./redux/configureStore";
+
+import Root from "./root";
+
+const { store } = configreStore();
 
 ReactDOM.render(
-    <Root>
-        <App />
-    </Root>
-     , document.getElementById('root'));
+  <Root>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Root>,
+  document.getElementById("root")
+);
