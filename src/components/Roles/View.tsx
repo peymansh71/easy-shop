@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Table } from "antd";
+
 import Create from "./Create";
 
 import { getRolesData } from "../../redux/actions/RolesActions";
-import { useDispatch } from "react-redux";
 
 export default function View<IProps>() {
   const [stateVisible, setStateVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const rolesData = useSelector((state: { roles: object }) => state.roles);
 
   useEffect(() => {
     callApi();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const callApi = async () => {
     const apiConf = {

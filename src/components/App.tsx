@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.scss";
+import "../sass/App.scss";
 import View from "./Roles/View";
 import AccessControl from "./Roles/AccessControl";
 import History from "./Roles/History";
