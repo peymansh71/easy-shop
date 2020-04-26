@@ -18,7 +18,50 @@
           margin: 0 1px;
           font-size: 0.66rem;
         }
+        width: 300px;
+        padding: 2px 0 !important;
       }
+
+      tr:first-child {
+        th:first-child {
+          background-color: $white !important;
+          border: none !important;
+          > div {
+            width: 300px;
+            > div {
+              border-radius: 10px !important;
+              border: 1.5px solid $sec-success;
+              &:focus {
+                border: 1.5px solid $sec-success;
+              }
+            }
+          }
+        }
+      }
+
+      th:nth-child(2) {
+        border-left: 1px solid #f0f0f0;
+      }
+
+      tr:nth-child(2) {
+        th:first-child {
+          background-color: $primary-color !important;
+          margin-top: 2px;
+          border: none !important;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td:first-child {
+          border-left: 1px solid #f0f0f0;
+        }
+      }
+    }
+
+    .ant-table-container {
+      border: none;
     }
   }
 }

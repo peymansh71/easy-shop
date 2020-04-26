@@ -21,8 +21,7 @@ export const getRolesData = (payload) => async (dispatch) => {
 
   // API
   const roles_result = await Service.Get_rolesData(payload);
-
-  if (!roles_result.hasOwnProperty("errors")) {
+  if (roles_result) {
     dispatch(roles_resultSuccess(roles_result));
   } else {
     console.log(">>>> roles_result is failed", roles_result);

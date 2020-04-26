@@ -1,29 +1,96 @@
 import React, { useState } from "react";
-import { Button, Table, Tag, Checkbox } from "antd";
+import { Button, Table, Checkbox, Select } from "antd";
 
 export default function AccessControl() {
-  const data: any[] | undefined = [];
+  // const data: any[] | undefined = [];
 
-  for (let i = 0; i < 13; i++) {
-    data.push({
-      key: i,
-      companyAddress: <Checkbox onChange={(e) => changings(e, i)}></Checkbox>,
-    });
+  // for (let i = 0; i < 13; i++) {
+  //   data.push({
+  //     key: i,
+  //     companyAddress: <Checkbox onChange={(e) => changings(e, i)}></Checkbox>,
+  //   });
+  // }
+
+  const rowSelection = {
+    onChange: (selectedRowKeys: any, selectedRows: any) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    onSelect: (record: any, selected: any, selectedRows: any) => {
+      console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
+      console.log(selected, selectedRows, changeRows);
+    },
+  };
+
+  const { Option } = Select;
+
+  const children = [];
+  for (let i = 0; i < 5; i++) {
+    children.push(
+      <Option value={i} key={i.toString(36) + i}>
+        {i.toString(36) + i}
+      </Option>
+    );
   }
+
+  const data = [
+    {
+      key: 1,
+      name: "John Brown sr.",
+      children: [
+        {
+          key: 11,
+          name: "John Brown",
+          age: 42,
+          address: "New York No. 2 Lake Park",
+        },
+      ],
+    },
+    {
+      key: 2,
+      name: "John Brown sr.",
+      children: [
+        {
+          key: 11,
+          name: "John Brown",
+          age: 42,
+          address: "New York No. 2 Lake Park",
+        },
+      ],
+    },
+  ];
 
   const columns = [
     {
-      title: "Select Role",
+      title: (
+        <>
+          <Select
+            className="access-control__select"
+            size="large"
+            placeholder="choose..."
+            onChange={() => console.log("asdasd")}
+            style={{ width: 300 }}
+          >
+            {children}
+          </Select>
+        </>
+      ),
+
       children: [
         {
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          title: "",
+          dataIndex: "name",
+          key: "ss",
           width: 100,
         },
       ],
       dataIndex: "DateCreated",
       key: "DateCreated",
-      ellipsis: true,
     },
     {
       title: "No Access(invisable)",
@@ -68,7 +135,7 @@ export default function AccessControl() {
           ),
           dataIndex: "companyAddress",
           key: "companyAddress",
-          width: 120,
+          width: 100,
         },
       ],
       dataIndex: "DateCreated",
@@ -223,6 +290,7 @@ export default function AccessControl() {
         <Button className="button">save</Button>
         <Button className="button">?</Button>
       </div>
+      <img src={ARROWDOWN} alt="" />
 
       <Table
         columns={columns}
