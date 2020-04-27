@@ -36,6 +36,8 @@ export default function View<IProps>() {
     console.log(action, roles);
   };
 
+  console.log(rolesData);
+
   const data = [
     {
       key: "1",
@@ -84,6 +86,7 @@ export default function View<IProps>() {
       title: "Stauts",
       key: "action",
       ellipsis: true,
+      width: 250,
       render: (roles: any) => (
         <span>
           {["Active", "Inactive", "Delete"].map((action: string, index) => {

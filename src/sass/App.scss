@@ -51,15 +51,15 @@
       color: #5a8d7c !important;
       background: #f2f0f1 !important;
       text-align: center;
-      border-color: #e2e2e2 !important;
-      border-top: 1px solid #e2e2e2 !important;
+      border-color: $pale-grey !important;
+      border-top: 1px solid $pale-grey !important;
     }
   }
 
   tbody {
     > tr > td {
       text-align: center;
-      border-color: #e2e2e2 !important;
+      border-color: $pale-grey !important;
     }
   }
 }
@@ -71,6 +71,12 @@
     > span {
       font-size: 1rem;
       font-weight: bold;
+    }
+  }
+
+  .ant-table-tbody > tr.ant-table-row {
+    &:hover > td {
+      background-color: $lemon-green;
     }
   }
 }
