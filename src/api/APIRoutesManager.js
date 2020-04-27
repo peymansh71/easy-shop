@@ -8,6 +8,7 @@ class APIRouteManager {
 
     this.pathNames = {
       [APIEndpointConstants.GET_roles]: "api/role",
+      [APIEndpointConstants.Post_newRole]: "api/role",
       [APIEndpointConstants.Get_accessControlData]:
         "api/roleModulepageFieldAccess",
       [APIEndpointConstants.Get_modulepagefieldData]: "api/modulepagefield",

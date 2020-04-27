@@ -1,5 +1,3 @@
-// import "@babel/polyfill";
-
 import APIRouteManager from "./APIRoutesManager";
 import APIEndpointConstants from "./APIEndpointConstants";
 
@@ -30,6 +28,15 @@ class Service {
         params,
       }),
       { method: "GET" }
+    );
+
+  Post_newRole = ({ params = {}, body = {} }) =>
+    this.fetchBase(
+      APIRouteManager.generateRoute({
+        key: APIEndpointConstants.Post_newRole,
+        params,
+      }),
+      { method: "POST" }
     );
 
   // Access Control

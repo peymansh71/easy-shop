@@ -24,9 +24,35 @@ export const getRolesData = (payload) => async (dispatch) => {
   if (roles_result) {
     dispatch(roles_resultSuccess(roles_result));
   } else {
-    console.log(">>>> roles_result is failed", roles_result);
-
     dispatch(roles_resultFailure(roles_result));
+  }
+};
+
+//******************* */      post new Role   //************************* */
+
+export const post_NewRoleDataRequest = () => ({
+  type: ROLES_ACTION_TYPES.POST_ROLE_REQUEST,
+});
+
+export const post_roleSuccess = (payload) => ({
+  type: ROLES_ACTION_TYPES.POST_ROLE_SUCCESS,
+  payload,
+});
+
+export const post_roleFailure = (payload) => ({
+  type: ROLES_ACTION_TYPES.POST_ROLE_FAILURE,
+  payload,
+});
+
+export const postNewRoleData = (payload) => async (dispatch) => {
+  dispatch(post_NewRoleDataRequest());
+
+  // API
+  const _response = await Service.Post_newRole(payload);
+  if (_response) {
+    dispatch(post_roleSuccess(_response));
+  } else {
+    dispatch(post_roleFailure(_response));
   }
 };
 
@@ -51,11 +77,8 @@ export const getAccessControlData = (payload) => async (dispatch) => {
   // API
   const access_result = await Service.Get_accessControlData(payload);
   if (access_result) {
-    console.log(">>>> access_result successfully", access_result);
     dispatch(accessControlDataSuccess(access_result));
   } else {
-    console.log(">>>> access_result is failed", access_result);
-
     dispatch(accessControlDataFailure(access_result));
   }
 };
@@ -81,11 +104,8 @@ export const getModulePageFieldData = (payload) => async (dispatch) => {
   // API
   const modlue_result = await Service.Get_modulepagefieldData(payload);
   if (modlue_result) {
-    console.log(">>>> modlue_result successfully", modlue_result);
     dispatch(modulepagefieldSuccess(modlue_result));
   } else {
-    console.log(">>>> modlue_result is failed", modlue_result);
-
     dispatch(modulepagefieldFailure(modlue_result));
   }
 };

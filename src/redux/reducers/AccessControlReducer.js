@@ -6,7 +6,6 @@ export function AccessControlReducer(
   state = initialState.accessControls,
   action
 ) {
-  console.log(action);
   switch (action.type) {
     // Request
     case ROLES_ACTION_TYPES.ACCESS_CONTROl_SUCCESS:

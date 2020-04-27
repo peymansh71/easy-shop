@@ -10,12 +10,17 @@ export default function View<IProps>() {
   const [stateVisible, setStateVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const rolesData = useSelector((state: { roles: object }) => state.roles);
+  const rolesData = useSelector((state: { roles: [] }) => state.roles);
 
   useEffect(() => {
     callApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setData(rolesData);
+  }, [rolesData]);
+
+  const [datas, setData] = useState([] as any);
 
   const callApi = async () => {
     const apiConf = {
@@ -32,11 +37,9 @@ export default function View<IProps>() {
     setStateVisible(false);
   };
 
-  const roleActions = (action: string, roles: object) => {
+  const roleActions = (action: string, roles: any) => {
     console.log(action, roles);
   };
-
-  console.log(rolesData);
 
   const data = [
     {
@@ -64,6 +67,10 @@ export default function View<IProps>() {
       LatestUpdateDate: 55,
     },
   ];
+
+  // const data: any[] | undefined = [];
+
+  // const dataaa = datas.map((i: any) => data.push(i));
 
   const columns = [
     {
@@ -115,18 +122,10 @@ export default function View<IProps>() {
   return (
     <div className="main">
       <div className="main__pubilc">
-        <Button className="button" onClick={showModal}>
-          Import
-        </Button>
-        <Button className="button" onClick={showModal}>
-          Export
-        </Button>
-        <Button className="button" onClick={showModal}>
-          Save
-        </Button>
-        <Button className="button" onClick={showModal}>
-          ?
-        </Button>
+        <Button className="button">Import</Button>
+        <Button className="button">Export</Button>
+        <Button className="button">Save</Button>
+        <Button className="button">?</Button>
       </div>
 
       <Button className="button" onClick={showModal}>

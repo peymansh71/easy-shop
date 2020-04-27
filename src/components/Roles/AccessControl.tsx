@@ -46,6 +46,7 @@ export default function AccessControl() {
     let newData = ([] as any).concat(datas);
     setData(newData.map((i: any) => ({ ...i, [field]: true })));
   };
+
   const deselectAll = (field: string) => (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -76,9 +77,7 @@ export default function AccessControl() {
         let newItem = addCheckBoxFields(item);
         newItem.name = (
           <>
-            <Radio.Group onChange={(e) => onChangeRadio(e)} value={stateValue}>
-              <Radio value={item.id}>{item.moduleName}</Radio>
-            </Radio.Group>
+            <Radio value={item.id}>{item.moduleName}</Radio>
           </>
         );
         acc.push(newItem);
@@ -329,12 +328,14 @@ export default function AccessControl() {
     }
     setData(newData);
   };
+
   const getCheckBox = (row: any, field: string) => (
     <Checkbox
       checked={row[field]}
       onChange={onCheckBoxChange(row.id, field)}
     ></Checkbox>
   );
+
   const addCheckBoxFields = (row: any) => {
     let newRow = { ...row };
     newRow.noAccessFlag = getCheckBox(newRow, "noAccessFlag");
@@ -346,6 +347,7 @@ export default function AccessControl() {
     newRow.voidUndoFlag = getCheckBox(newRow, "voidUndoFlag");
     return newRow;
   };
+
   const manipulateData = (): { [id: string]: any }[] => {
     let cols = [
       {

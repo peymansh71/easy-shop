@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { Modal, Button, Input, Form, DatePicker } from "antd";
+
+import { postNewRoleData } from "../../redux/actions/RolesActions";
 
 interface IProps {
   show: boolean;
@@ -9,17 +13,39 @@ interface IProps {
 export default function Create({ show, onclose }: IProps) {
   // const [roleName, setRoleName] = useState<string | undefined>(undefined);
 
+  const dispatch = useDispatch();
+
+  const [roleName, setRoleName] = useState({});
+  const [StartDate, setSatrtDate] = useState({});
+  const [EndDate, setEndDate] = useState({});
+
   const onChange = (value: any) => {
-    // setRoleName(e.value);
-    console.log(value);
+    setRoleName(value);
   };
 
   const onStartTimeChange = (date: any, dateString: any) => {
-    console.log(date, dateString);
+    setSatrtDate(dateString);
   };
 
   const onEndTimeChange = (date: any, dateString: any) => {
-    console.log(date, dateString);
+    setEndDate(dateString);
+  };
+
+  const apiConf = {
+    params: {
+      clientAccountID: 2,
+      recordStatusID: 2,
+      actionDate: StartDate,
+      name: roleName,
+      categoryStatusId: 1,
+      effectiveFromDate: StartDate,
+      effectiveToDate: EndDate,
+    },
+  };
+
+  const callRoleApi = () => {
+    dispatch(postNewRoleData(apiConf));
+    onclose();
   };
 
   return (
@@ -76,7 +102,9 @@ export default function Create({ show, onclose }: IProps) {
           </Form.Item>
         </Form>
 
-        <Button onClick={onclose}>create</Button>
+        <Button htmlType="submit" onClick={callRoleApi}>
+          create
+        </Button>
       </Modal>
     </div>
   );
