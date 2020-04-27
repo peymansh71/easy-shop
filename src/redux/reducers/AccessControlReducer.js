@@ -10,9 +10,7 @@ export function AccessControlReducer(
   switch (action.type) {
     // Request
     case ROLES_ACTION_TYPES.ACCESS_CONTROl_SUCCESS:
-      return {
-        ...action.payload,
-      };
+      return [...action.payload];
 
     default:
       return state;

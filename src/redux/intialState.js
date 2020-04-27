@@ -1,4 +1,5 @@
 export default {
-  roles: {},
-  accessControls: {},
+  roles: [],
+  accessControls: [],
+  modules: [],
 };

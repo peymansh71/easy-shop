@@ -36,7 +36,17 @@ class Service {
   Get_accessControlData = ({ params = {}, body = {} }) =>
     this.fetchBase(
       APIRouteManager.generateRoute({
-        key: APIEndpointConstants.GET_roleAccess,
+        key: APIEndpointConstants.Get_accessControlData,
+        params,
+      }),
+      { method: "GET" }
+    );
+
+  // Module Page
+  Get_modulepagefieldData = ({ params = {}, body = {} }) =>
+    this.fetchBase(
+      APIRouteManager.generateRoute({
+        key: APIEndpointConstants.Get_modulepagefieldData,
         params,
       }),
       { method: "GET" }

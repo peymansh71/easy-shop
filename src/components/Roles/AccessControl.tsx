@@ -1,68 +1,91 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getAccessControlData } from "../../redux/actions/RolesActions";
+import {
+  getAccessControlData,
+  getModulePageFieldData,
+} from "../../redux/actions/RolesActions";
 
 import { Button, Table, Checkbox, Select, Radio } from "antd";
 
 export default function AccessControl() {
+  const { accessControls, roles } = useSelector(
+    (state: { accessControls: any[]; roles: any[] }) => state
+  );
+  const [datas, setData] = useState([] as any);
+  const [role, selectRole] = useState<string | number>("");
+
   useEffect(() => {
     callApi();
   }, []);
+
+  useEffect(() => {
+    setData(accessControls);
+  }, [accessControls]);
 
   const callApi = () => {
     const apiConf = {
       params: {},
     };
     dispatch(getAccessControlData(apiConf));
+    dispatch(getModulePageFieldData(apiConf));
   };
 
   const [stateValue, setStateValue] = useState<number | undefined>(0);
-
   const dispatch = useDispatch();
 
-  // const data: any[] | undefined = [];
-
-  // for (let i = 0; i < 13; i++) {
-  //   data.push({
-  //     key: i,
-  //     companyAddress: <Checkbox  onChange={(e) => changings(e, i)}></Checkbox>,
-  //   });
-  // }
-
   const { Option } = Select;
-
-  const children = [];
-  for (let i = 0; i < 5; i++) {
-    children.push(
-      <Option value={i} key={i.toString(36) + i}>
-        {i.toString(36) + i}
-      </Option>
-    );
-  }
 
   const onChangeRadio = (e: any) => {
     setStateValue(e.target.value);
   };
 
-  const data = [
-    {
-      key: 1,
-      name: (
-        <>
-          <Radio.Group onChange={(e) => onChangeRadio(e)} value={stateValue}>
-            <Radio value={1}>Purchase</Radio>
-          </Radio.Group>
-        </>
-      ),
-      children: [
-        {
-          key: 11,
-          name: "John Brown",
-        },
-      ],
-    },
-  ];
+  const selectAll = (field: string) => (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    let newData = ([] as any).concat(datas);
+    setData(newData.map((i: any) => ({ ...i, [field]: true })));
+  };
+  const deselectAll = (field: string) => (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    let newData = ([] as any).concat(datas);
+    setData(newData.map((i: any) => ({ ...i, [field]: false })));
+  };
+
+  const innerJoin = (xs: any[], ys: any[], sel: any) =>
+    xs.reduce(
+      (zs, x) =>
+        ys.reduce(
+          (
+            zs,
+            y // cartesian product - all combinations
+          ) => zs.concat(sel(x, y) || []), // filter out the rows and columns you want
+          zs
+        ),
+      []
+    );
+
+  function getNestedChildren(array: any[], moduleName?: string) {
+    let arr = [...array];
+    return arr.reduce((acc, item: any, arrIndex: number) => {
+      if (item.name === item.moduleName) {
+        item.children = [...array]
+          .filter((i) => i.moduleName === item.name && i.moduleName !== i.name)
+          .map(addCheckBoxFields);
+        let newItem = addCheckBoxFields(item);
+        newItem.name = (
+          <>
+            <Radio.Group onChange={(e) => onChangeRadio(e)} value={stateValue}>
+              <Radio value={item.id}>{item.moduleName}</Radio>
+            </Radio.Group>
+          </>
+        );
+        acc.push(newItem);
+      }
+      return acc;
+    }, []);
+  }
 
   const columns = [
     {
@@ -72,10 +95,14 @@ export default function AccessControl() {
             className="access-control__select"
             size="large"
             placeholder="choose..."
-            onChange={() => console.log("asdasd")}
+            onChange={(e: string | number) => selectRole(e)}
             style={{ width: 300 }}
           >
-            {children}
+            {roles.map((role) => (
+              <Option value={role.id} key={role.id}>
+                {role.name}
+              </Option>
+            ))}
           </Select>
         </>
       ),
@@ -100,22 +127,26 @@ export default function AccessControl() {
               <Button
                 className="button"
                 size="small"
-                onClick={() => console.log("object")}
+                onClick={selectAll("noAccessFlag")}
               >
                 Select All
               </Button>
-              <Button className="button" size="small">
+              <Button
+                className="button"
+                size="small"
+                onClick={deselectAll("noAccessFlag")}
+              >
                 Deselect All
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "noAccessFlag",
+          key: "noAccessFlag",
           width: 100,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "noAccessFlag",
+      key: "noAccessFlag",
       ellipsis: true,
     },
     {
@@ -132,13 +163,13 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "readonlyFlag",
+          key: "readonlyFlag",
           width: 100,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "readonlyFlag",
+      key: "readonlyFlag",
       ellipsis: true,
     },
     {
@@ -155,13 +186,13 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "readWriteFlag",
+          key: "readWriteFlag",
           width: 120,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "readWriteFlag",
+      key: "readWriteFlag",
       ellipsis: true,
     },
     {
@@ -178,17 +209,17 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "dataImportFlag",
+          key: "dataImportFlag",
           width: 120,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "dataImportFlag",
+      key: "dataImportFlag",
       ellipsis: true,
     },
     {
-      title: "Export",
+      title: "dataExportFlag",
       children: [
         {
           title: (
@@ -201,13 +232,13 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "dataExportFlag",
+          key: "dataExportFlag",
           width: 120,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "dataExportFlag",
+      key: "dataExportFlag",
       ellipsis: true,
     },
     {
@@ -224,13 +255,13 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "voidUndoFlag",
+          key: "voidUndoFlag",
           width: 120,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "voidUndoFlag",
+      key: "voidUndoFlag",
       ellipsis: true,
     },
     {
@@ -269,18 +300,83 @@ export default function AccessControl() {
               </Button>
             </>
           ),
-          dataIndex: "companyAddress",
-          key: "companyAddress",
+          dataIndex: "fullAccessFlag",
+          key: "fullAccessFlag",
           width: 120,
         },
       ],
-      dataIndex: "DateCreated",
-      key: "DateCreated",
+      dataIndex: "fullAccessFlag",
+      key: "fullAccessFlag",
     },
   ];
 
-  const changings = (e: any, i: number) => {
-    console.log(e, i);
+  const onCheckBoxChange = (i: number, field: string) => (e: any) => {
+    let newData = ([] as any).concat(datas);
+    let target = newData.find((item: any) => item.id === i);
+    target[field] = e.target.checked;
+    if (field === "noAccessFlag" && e.target.checked) {
+      // some properties should set flase when No Access has been selected
+      target.readonlyFlag = target.readWriteFlag = target.dataImportFlag = target.dataExportFlag = target.voidUndoFlag = target.fullAccessFlag = !e
+        .target.checked;
+    } else if (field === "fullAccessFlag" && e.target.checked) {
+      // some properties should set true when full Access has been selected
+      target.readonlyFlag = target.readWriteFlag = target.dataImportFlag = target.dataExportFlag = target.voidUndoFlag =
+        e.target.checked;
+      target.noAccessFlag = !e.target.checked;
+    } else {
+      // otherwise it should change no access and full access to false
+      target.noAccessFlag = target.fullAccessFlag = false;
+    }
+    setData(newData);
+  };
+  const getCheckBox = (row: any, field: string) => (
+    <Checkbox
+      checked={row[field]}
+      onChange={onCheckBoxChange(row.id, field)}
+    ></Checkbox>
+  );
+  const addCheckBoxFields = (row: any) => {
+    let newRow = { ...row };
+    newRow.noAccessFlag = getCheckBox(newRow, "noAccessFlag");
+    newRow.fullAccessFlag = getCheckBox(newRow, "fullAccessFlag");
+    newRow.readonlyFlag = getCheckBox(newRow, "readonlyFlag");
+    newRow.readWriteFlag = getCheckBox(newRow, "readWriteFlag");
+    newRow.dataImportFlag = getCheckBox(newRow, "dataImportFlag");
+    newRow.dataExportFlag = getCheckBox(newRow, "dataExportFlag");
+    newRow.voidUndoFlag = getCheckBox(newRow, "voidUndoFlag");
+    return newRow;
+  };
+  const manipulateData = (): { [id: string]: any }[] => {
+    let cols = [
+      {
+        // this is replacement of corrupted route:https://easyshop-api.azurewebsites.net/api/modulepagefield
+        id: 1,
+        name: "purchase",
+        moduleName: "purchase",
+      },
+      {
+        id: 2,
+        name: "purchase order",
+        moduleName: "purchase",
+      },
+    ];
+
+    if (datas && datas.length && role) {
+      const result = innerJoin(
+        cols,
+        datas,
+        (col: any, accessControl: any) =>
+          col.id === accessControl.modulePageFieldID && {
+            ...accessControl,
+            ...col,
+            id: accessControl.id,
+          }
+      );
+      return (
+        getNestedChildren(result.filter((i: any) => i.roleId === role)) || []
+      );
+    }
+    return [];
   };
 
   return (
@@ -290,14 +386,16 @@ export default function AccessControl() {
         <Button className="button">?</Button>
       </div>
 
-      <Table
-        columns={columns}
-        size="small"
-        className="table"
-        dataSource={data}
-        bordered
-        pagination={false}
-      />
+      {accessControls && accessControls.length && (
+        <Table
+          columns={columns}
+          size="small"
+          className="table"
+          dataSource={manipulateData()}
+          bordered
+          pagination={false}
+        />
+      )}
     </div>
   );
 }
